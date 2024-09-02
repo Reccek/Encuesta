@@ -52,10 +52,18 @@
     <script>
         function moveNoButton() {
             var button = document.querySelector('.no');
-            var maxWidth = window.innerWidth - button.offsetWidth;
-            var maxHeight = window.innerHeight - button.offsetHeight;
+            var buttonWidth = button.offsetWidth;
+            var buttonHeight = button.offsetHeight;
+
+            // Calculate the maximum X and Y positions to keep the button within the viewport
+            var maxWidth = window.innerWidth - buttonWidth - 20; // 20px padding
+            var maxHeight = window.innerHeight - buttonHeight - 20; // 20px padding
+
+            // Generate random X and Y positions within the calculated limits
             var randomX = Math.floor(Math.random() * maxWidth);
             var randomY = Math.floor(Math.random() * maxHeight);
+
+            // Apply the new position to the button
             button.style.left = randomX + 'px';
             button.style.top = randomY + 'px';
         }
