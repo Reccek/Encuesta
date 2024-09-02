@@ -13,6 +13,7 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
+            overflow: hidden; /* Evita scroll */
         }
         .container {
             text-align: center;
@@ -20,7 +21,9 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            position: relative; /* Necessary for the absolute positioning of buttons */
+            position: relative;
+            width: 300px; /* Fija el ancho del contenedor */
+            height: 200px; /* Fija la altura del contenedor */
         }
         .button {
             display: inline-block;
@@ -35,11 +38,10 @@
         }
         .yes {
             background-color: #28a745;
-            position: static; /* Ensures it stays in place */
+            position: static;
         }
         .no {
             background-color: #dc3545;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -52,18 +54,25 @@
     <script>
         function moveNoButton() {
             var button = document.querySelector('.no');
+            var container = document.querySelector('.container');
+
             var buttonWidth = button.offsetWidth;
             var buttonHeight = button.offsetHeight;
 
-            // Calculate the maximum X and Y positions to keep the button within the viewport
-            var maxWidth = window.innerWidth - buttonWidth - 20; // 20px padding
-            var maxHeight = window.innerHeight - buttonHeight - 20; // 20px padding
+            var containerRect = container.getBoundingClientRect();
 
-            // Generate random X and Y positions within the calculated limits
-            var randomX = Math.floor(Math.random() * maxWidth);
-            var randomY = Math.floor(Math.random() * maxHeight);
+            // Ajuste para permitir más desplazamiento
+            var padding = 50; // Ajusta este valor para controlar el desplazamiento
 
-            // Apply the new position to the button
+            var maxX = containerRect.width - buttonWidth - padding;
+            var maxY = containerRect.height - buttonHeight - padding;
+
+            var minX = padding;
+            var minY = padding;
+
+            var randomX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+            var randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+
             button.style.left = randomX + 'px';
             button.style.top = randomY + 'px';
         }
